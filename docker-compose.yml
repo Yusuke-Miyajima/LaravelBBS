@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  db:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: practice
+      MYSQL_USER : user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - my_network
+
+  app:
+    container_name: practice_bbs
+    build:
+      args:
+        user: practice
+        uid: 1000
+      context: ./docker-config/php
+      dockerfile: Dockerfile
+    image: laravel-env
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./web/:/var/www
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./web/:/var/www
+      - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local
