@@ -22,10 +22,13 @@ Route::get('/', function () {
 });
 
 Route::get('/index', 'Index\IndexController@index');
-Route::post('/index', 'Index\IndexController@confirm');
-Route::get('/edit/{id}', 'Edit\EditController@edit');
+Route::post('/index', 'Index\IndexController@btn_push');
+Route::get('/edit', 'Edit\EditController@edit');
+Route::post('/edit', 'Edit\EditController@btn_push');
 Route::get('/confirm', 'Confirm\ConfirmController@confirm');
+Route::post('/confirm', 'Confirm\ConfirmController@btn_push');
 Route::get('/complete', 'Complete\CompleteController@complete');
+Route::post('/complete', 'Complete\CompleteController@btn_push');
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');

@@ -1,42 +1,34 @@
 @extends('layout')
 
 @section('content')
+
 	<section id="confirm-section">
 		<div class="confirm-area">
-			<div class="error_message">
-				<span style="color: red;">
-					@if(isset($err))
+			<div class="confirm_message">
+				<p>
 					<?php
-					echo $err;
+					echo $message;
 					?>
-					@endif
-				</span>
+				</p>
 			</div>
 
-			<form action="./complete.blade.php" method="post">
+			<form action="/confirm" method="post">
+				@csrf
 				<div>
 					<table>
 						<tr>
-							<td class="itemName"><div>Name</div></td>
-							<td><div style="color: #ff9900"></div></td>
+							<th class="itemName">Title</th>
+							<td>{{$title}}</td>
 						</tr>
 						<tr>
-							<td class="itemName"><div>E-mail</div></td>
-							<td><div style="color: #ff9900"></div></td>
-						</tr>
-						<tr>
-							<td class="itemName"><div>Title</div></td>
-							<td><div style="color: #ff9900"></div></td>
-						</tr>
-						<tr>
-							<td class="itemName"><div>Text</div></td>
-							<td><div style="color: #ff9900"></div></td>
+							<th class="itemName">Text</th>
+							<td>{{$text}}</td>
 						</tr>
 					</table>
 				</div>
 				<div>
-					<input class="button" type="button" name="Back" value="Back">
-					<input class="button" type="submit" name="Submit" value="Post">
+					<input class="button" type="submit" name="back" value="Back">
+					<input class="button" type="submit" name="post" value="Post">
 				</div>
 			</form>
 		</div>

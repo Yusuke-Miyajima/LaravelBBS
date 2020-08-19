@@ -18,24 +18,24 @@
 					@csrf
 					<tr>
 						<td>title:</td>
-						<td><input type="hidden" name="title" value="test_title1"></td>
-						<td><input type="hidden" name="posted_user_id" value="1"></td>
+						<td><input type="text" name="title"></td>
 					</tr>
 					<tr>
 						<td>text:</td>
-						<td><input type="hidden" name="text" value="test_text1"></td>
+						<td><textarea name="text"></textarea></td>
 					</tr>
 					<tr>
 						<td><input class="button" type="submit" name="clear" value="clear"></td>
-						<td><input class="button" type="submit" name="confirm" value="confirm"></td>
+						<td><input class="button" type="submit" name="set_session" value="confirm"></td>
 					</tr>
 				</table>
 			</form>
 		</div>
 
 		<hr>
-		<div class="contents container">
+		<div class="contents container mb-5">
 			@foreach ($items as $item)
+			@if($item->delete_flg == 0)
 				<table class="table-bordered">
 					<tr>
 						<td colspan="2">{{$item->title}}</td>
@@ -49,10 +49,15 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input class="button" type="submit" name="edit" value="edit">
+							<form action="index" method="post">
+								@csrf
+								<input type="hidden" name="article_id" value="{{$item->id}}">
+								<input class="button" type="submit" name="edit" value="edit">
+							</form>
 						</td>
 					</tr>
 				</table>
+			@endif
 			@endforeach
 		</div>
 	</section>
